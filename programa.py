@@ -1,3 +1,4 @@
+# Matriz inicial: [ID_Cliente, Duracion_segundos, Clics]
 datos = [
     ["AAA001", 210, 12],
     ["AAA002", 45, 5],
@@ -28,4 +29,16 @@ def calcular_compromiso (duracion, clics):
     else:
         return "Medio"
     
+#imprimir informe total    
+def informe_total():
+    for cliente in datos:
+       id_cliente = cliente[0]
+       duracion = cliente[1]
+       clics = cliente[2]
+       compromiso = calcular_compromiso(duracion, clics)
+       print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
     
+#bucle principal del programa
+while True:
+
+       
