@@ -46,6 +46,17 @@ def agregar_registro(datos):
     datos.append([nuevo_id, duracion, clics])
     print("\nRegistro agregado correctamente.")
     print("Nuevo registro:", datos[-1])
+
+#Eliminar datos del registro por ID
+def eliminar_registro(datos):
+    id_buscado = input("Ingrese el ID del registro a eliminar: ").upper()#pasa a mayuscula 
+
+    for i in range(len(datos)):
+        if datos[i][0] == id_buscado:
+            datos.pop(i)
+            print("Registro eliminado correctamente.")
+            return
+    print("No existe un registro con ese ID.")
     
 #bucle principal del programa
 while True:
@@ -86,7 +97,7 @@ while True:
         while True:
             try:
                 duracion = int(input("Ingrese la duración (segundos): "))
-                if duracion >= 0:
+                if duracion > 0:
                      break
                 else:
                      print("La duración no puede ser negativa.")
@@ -105,7 +116,7 @@ while True:
         #agrega nuevo registro al final de la matriz
         agregar_registro(datos)
     elif opcion == 3:
-        print("prueba 3")
+        eliminar_registro(datos)
     elif opcion == 4:
         print("prueba 4")
     
