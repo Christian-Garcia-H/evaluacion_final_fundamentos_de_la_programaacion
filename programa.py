@@ -40,5 +40,33 @@ def informe_total():
     
 #bucle principal del programa
 while True:
+    print("\n=================================================")
+    print("               MENÚ PRINCIPAL")
+    print("=================================================")
+    print("1. Imprimir informe completo de compromiso")
+    print("2. Agregar datos al registro de duración y clics")
+    print("3. Eliminar datos del registro por ID")
+    print("4. Imprimir informe por ID")
+    print("-------------------------------------------------")
+
+    intentos = 0
+    while True:
+        try:
+            opcion = int(input("Seleccione una opción (1-4): "))
+
+            if 1 <= opcion <= 4:
+                break
+            else:
+                print("Error: Debe ingresar un número entre 1 y 4.")
+                intentos += 1
+
+        except ValueError:
+            print("Error: Debe ingresar únicamente un número Entero.")
+            intentos += 1
+
+        if intentos == 3:
+            print("\nHa agotado los 3 intentos. Se mostrará nuevamente el menú.\n")
+            break
+    
 
        
