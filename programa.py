@@ -1,3 +1,19 @@
+#paleta de colores
+RESET = "\033[0m"
+ROJO = "\033[31m"
+VERDE = "\033[32m"
+AMARILLO = "\033[33m"
+AZUL = "\033[34m"
+MAGENTA = "\033[35m"
+CIAN = "\033[36m"
+BLANCO = "\033[97m"
+NEGRITA = "\033[1m"
+# Variables con colores
+ERROR = "\033[1;31m"
+EXITO = "\033[1;32m"
+MENU = "\033[1;36m"
+TITULO = "\033[1;34m"
+AVISO = "\033[1;33m"
 # Matriz inicial: [ID_Cliente, Duracion_segundos, Clics]
 datos = [
     ["C001", 210, 12],
@@ -8,7 +24,7 @@ datos = [
 ]
 
 
-print(r"""
+print(TITULO + r"""
  ____                                                       __            
 /\  _`\    __                                        __    /\ \           
 \ \ \L\ \ /\_\     __    ___   __  __     __    ___ /\_\   \_\ \    ___   
@@ -17,7 +33,7 @@ print(r"""
    \ \____/ \ \_\ \____\ \_\ \_\ \___/ \ \____\ \_\ \_\ \_\ \___,_\ \____/
     \/___/   \/_/\/____/\/_/\/_/\/__/   \/____/\/_/\/_/\/_/\/__,_ /\/___/ 
 ------------Calcula el compromiso de tus clientes en instantes------------
-""")
+""" + RESET)
 
 
 #funcion para calcular el compromiso de los clientes:
@@ -54,7 +70,7 @@ def eliminar_registro(datos, id_buscado):
             datos.pop(i)
             print("Registro eliminado correctamente.")
             return True
-    print("No existe un registro con ese ID. Prueba con un ID como: C001")
+    print(f"{ERROR}No existe un registro con ese ID. Prueba con un ID como: C001{RESET}")
     return False
 
 #Imprimir informe por ID
@@ -68,20 +84,19 @@ def informe_por_id(datos, id_cliente):
             print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
             return True
 
-    print("No existe un registro con ese ID prueba con un ID como: C001")
+    print(f"{ERROR}No existe un registro con ese ID. Prueba con un ID como: C001{RESET}")
     return False
     
 #bucle principal del programa
 while True:
-    print("\n=================================================")
-    print("               MENÚ PRINCIPAL")
-    print("=================================================")
-    print("1. Imprimir informe completo de compromiso")
-    print("2. Agregar datos al registro de duración y clics")
-    print("3. Eliminar datos del registro por ID")
-    print("4. Imprimir informe por ID")
-    print("-------------------------------------------------")
-
+    print(f"\n{MENU}================================================={RESET}")
+    print(f"{TITULO}               MENÚ PRINCIPAL{RESET}")
+    print(f"{MENU}================================================={RESET}")
+    print(f"{AZUL}1.{RESET} Imprimir informe completo de compromiso")
+    print(f"{AZUL}2.{RESET} Agregar datos al registro de duración y clics")
+    print(f"{AZUL}3.{RESET} Eliminar datos del registro por ID")
+    print(f"{AZUL}4.{RESET} Imprimir informe por ID")
+    print(f"{MENU}-------------------------------------------------{RESET}")
     intentos = 0
     while True:
         try:
@@ -90,15 +105,15 @@ while True:
             if 1 <= opcion <= 4:
                 break
             else:
-                print("Error: Debe ingresar un número entre 1 y 4.")
+                print(f"{ERROR}Error: Debe ingresar un número entre 1 y 4.{RESET}")
                 intentos += 1
 
         except ValueError:
-            print("Error: Debe ingresar únicamente un número Entero.")
+            print(f"{ERROR}Error: Debe ingresar únicamente un número entero.{RESET}")
             intentos += 1
 
         if intentos == 3:
-            print("\nHa agotado los 3 intentos. Se mostrará nuevamente el menú.\n")
+            print(f"\n{AVISO}Ha agotado los 3 intentos. Se mostrará nuevamente el menú.{RESET}\n")
             break
     if intentos == 3:
         continue
@@ -113,9 +128,9 @@ while True:
                 if duracion > 0:
                      break
                 else:
-                     print("La duración no puede ser negativa.")
+                     print(f"{ERROR}La duración no puede ser negativa.{RESET}")
             except ValueError:
-                print("Debe ingresar un número entero.")
+                print(f"{ERROR}Debe ingresar un número entero.{RESET}")
         # Entrada de numero de clics
         while True:
             try:
@@ -123,9 +138,9 @@ while True:
                  if clics >= 0:
                    break
                  else:
-                   print("Los clics no pueden ser negativos.")
+                    print(f"{ERROR}Los clics no pueden ser negativos.{RESET}")
             except ValueError:
-                    print("Debe ingresar un número entero.")
+                    print(f"{ERROR}Debe ingresar un número entero.{RESET}")
         #agrega nuevo registro al final de la matriz
         agregar_registro(datos)
     elif opcion == 3:
@@ -137,7 +152,7 @@ while True:
                 if eliminar_registro(datos, id_buscado):
                      break
             except ValueError:
-                print("Debe ingresar un ID válido.")
+                print(f"{ERROR}Debe ingresar un ID válido.{RESET}")
     elif opcion == 4:
         while True:
              try:
@@ -147,5 +162,5 @@ while True:
                  if informe_por_id(datos, id_buscado):
                    break
              except ValueError:
-                 print("Debe ingresar un ID válido.")
+                 print(f"{ERROR}Debe ingresar un ID válido.{RESET}")
     
