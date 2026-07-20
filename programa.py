@@ -67,6 +67,13 @@ while True:
         if intentos == 3:
             print("\nHa agotado los 3 intentos. Se mostrará nuevamente el menú.\n")
             break
-    
-
-       
+    if intentos == 3:
+        continue
+    if opcion == 1:
+        informe_total()
+    elif opcion == 2:
+        print("prueba 2")
+    elif opcion == 3:
+        print("prueba 3")
+    elif opcion == 4:
+        print("prueba 4")
