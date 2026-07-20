@@ -1,10 +1,10 @@
 # Matriz inicial: [ID_Cliente, Duracion_segundos, Clics]
 datos = [
-    ["AAA001", 210, 12],
-    ["AAA002", 45, 5],
-    ["AAA003", 120, 6],
-    ["AAA004", 200, 2],
-    ["AAA005", 150, 7]
+    ["C001", 210, 12],
+    ["C002", 45, 5],
+    ["C003", 120, 6],
+    ["C004", 200, 2],
+    ["C005", 150, 7]
 ]
 
 
@@ -37,6 +37,15 @@ def informe_total():
        clics = cliente[2]
        compromiso = calcular_compromiso(duracion, clics)
        print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
+
+#Agregar datos al registro de duración y clics    
+def agregar_registro(datos):
+    ultimo_id = datos[-1][0]
+    numero = int(ultimo_id[3:]) + 1
+    nuevo_id = "C" + str(numero).zfill(3)
+    datos.append([nuevo_id, duracion, clics])
+    print("\nRegistro agregado correctamente.")
+    print("Nuevo registro:", datos[-1])
     
 #bucle principal del programa
 while True:
@@ -69,11 +78,34 @@ while True:
             break
     if intentos == 3:
         continue
+    #imprimir informe total  
     if opcion == 1:
         informe_total()
     elif opcion == 2:
-        print("prueba 2")
+        # Entrada de tiempo en segundos
+        while True:
+            try:
+                duracion = int(input("Ingrese la duración (segundos): "))
+                if duracion >= 0:
+                     break
+                else:
+                     print("La duración no puede ser negativa.")
+            except ValueError:
+                print("Debe ingresar un número entero.")
+        # Entrada de numero de clics
+        while True:
+            try:
+                 clics = int(input("Ingrese la cantidad de clics: "))
+                 if clics >= 0:
+                   break
+                 else:
+                   print("Los clics no pueden ser negativos.")
+            except ValueError:
+                    print("Debe ingresar un número entero.")
+        #agrega nuevo registro al final de la matriz
+        agregar_registro(datos)
     elif opcion == 3:
         print("prueba 3")
     elif opcion == 4:
         print("prueba 4")
+    
