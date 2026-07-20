@@ -47,12 +47,16 @@ def calcular_compromiso (duracion, clics):
     
 #imprimir informe total    
 def informe_total():
+    print(f"{MENU}================= INFORME ================={RESET}")
     for cliente in datos:
        id_cliente = cliente[0]
        duracion = cliente[1]
        clics = cliente[2]
        compromiso = calcular_compromiso(duracion, clics)
-       print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
+       print(f"{CIAN}ID del Usuario      : {BLANCO}{id_cliente}{RESET}")
+       print(f"{CIAN}Nivel de compromiso : {VERDE}{compromiso}{RESET}")
+       print(f"{MENU}-------------------------------------------{RESET}")
+    print(f"{MENU}==========================================={RESET}")
 
 #Agregar datos al registro de duración y clics    
 def agregar_registro(datos):
@@ -60,15 +64,21 @@ def agregar_registro(datos):
     numero = int(ultimo_id[3:]) + 1
     nuevo_id = "C" + str(numero).zfill(3)
     datos.append([nuevo_id, duracion, clics])
-    print("\nRegistro agregado correctamente.")
-    print("Nuevo registro:", datos[-1])
+    print(f"\n{MENU}================= REGISTRO ================={RESET}")
+    print(f"{VERDE}Estado         :{RESET} Registro agregado correctamente")
+    print(f"{CIAN}Nuevo ID       :{RESET} {BLANCO}{datos[-1][0]}{RESET}")
+    print(f"{CIAN}Duración       :{RESET} {BLANCO}{datos[-1][1]} segundos{RESET}")
+    print(f"{CIAN}Clics          :{RESET} {BLANCO}{datos[-1][2]}{RESET}")
+    print(f"{MENU}============================================{RESET}")
 
 #Eliminar datos del registro por ID
 def eliminar_registro(datos, id_buscado):
     for i in range(len(datos)):
         if datos[i][0] == id_buscado:
             datos.pop(i)
-            print("Registro eliminado correctamente.")
+            print(f"\n{MENU}================= ELIMINACIÓN ===================={RESET}")
+            print(f"{VERDE}Estado         :{RESET} Registro eliminado correctamente")
+            print(f"{MENU}=================================================={RESET}")
             return True
     print(f"{ERROR}No existe un registro con ese ID. Prueba con un ID como: C001{RESET}")
     return False
@@ -81,7 +91,10 @@ def informe_por_id(datos, id_cliente):
             clics = cliente[2]
             compromiso = calcular_compromiso(duracion, clics)
 
-            print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
+            print(f"{MENU}================= INFORME ================={RESET}")
+            print(f"{CIAN}ID del cliente      : {BLANCO}{id_cliente}{RESET}")
+            print(f"{CIAN}Nivel de compromiso : {VERDE}{compromiso}{RESET}")
+            print(f"{MENU}==========================================={RESET}")
             return True
 
     print(f"{ERROR}No existe un registro con ese ID. Prueba con un ID como: C001{RESET}")
@@ -89,6 +102,8 @@ def informe_por_id(datos, id_cliente):
     
 #bucle principal del programa
 while True:
+    contador = 0 # contador de intentos fallidos
+    #menu de opciones
     print(f"\n{MENU}================================================={RESET}")
     print(f"{TITULO}               MENÚ PRINCIPAL{RESET}")
     print(f"{MENU}================================================={RESET}")
@@ -96,8 +111,9 @@ while True:
     print(f"{AZUL}2.{RESET} Agregar datos al registro de duración y clics")
     print(f"{AZUL}3.{RESET} Eliminar datos del registro por ID")
     print(f"{AZUL}4.{RESET} Imprimir informe por ID")
+    print(f"{AZUL}5.{RESET} Salir")
     print(f"{MENU}-------------------------------------------------{RESET}")
-    intentos = 0
+    intentos = 0 #variable para seleccionar opciones del menu
     while True:
         try:
             opcion = int(input("Seleccione una opción (1-4): "))
@@ -115,16 +131,23 @@ while True:
         if intentos == 3:
             print(f"\n{AVISO}Ha agotado los 3 intentos. Se mostrará nuevamente el menú.{RESET}\n")
             break
+        
     if intentos == 3:
         continue
-    #imprimir informe total  
+    
+    
+    #imprimir informe total entrada  
     if opcion == 1:
         informe_total()
+        input("\nPresione Enter para volver al menú...")
+        
+    #ingreso de datos del usuario  
     elif opcion == 2:
         # Entrada de tiempo en segundos
+        print(f"\n{MENU}--------------- INGRESO DE DATOS ---------------{RESET}")
         while True:
             try:
-                duracion = int(input("Ingrese la duración (segundos): "))
+                duracion = int(input(f"{AZUL}>>{RESET} Ingrese la duración {CIAN}(segundos){RESET}: "))
                 if duracion > 0:
                      break
                 else:
@@ -134,7 +157,7 @@ while True:
         # Entrada de numero de clics
         while True:
             try:
-                 clics = int(input("Ingrese la cantidad de clics: "))
+                 clics = int(input(f"{AZUL}> {RESET}Cantidad de clics: "))
                  if clics >= 0:
                    break
                  else:
@@ -143,24 +166,55 @@ while True:
                     print(f"{ERROR}Debe ingresar un número entero.{RESET}")
         #agrega nuevo registro al final de la matriz
         agregar_registro(datos)
+        input("\nPresione Enter para volver al menú...")
+        
+    # ingreso de id para eliminar datos
     elif opcion == 3:
         while True:
             try:
-                id_buscado = input("Ingrese el ID del registro a eliminar: ").upper()
+                print(f"\n{MENU}--------------- ELIMINAR REGISTRO ---------------{RESET}")
+                id_buscado = input(f"{AZUL}> {RESET}Ingrese el ID del registro a eliminar: ").upper()
+                contador+=1
+                if contador == 3:
+                    print(f"\n{ERROR}=================== ERROR ==================={RESET}")
+                    print(f"{ROJO}No existe un registro con ese ID.{RESET}")
+                    print(f"{AMARILLO}Sugerencia:{RESET} Puede imprimir el informe completo")
+                    print(f"usando la {AZUL}opción 1{RESET} del menú para consultar")
+                    print(f"los ID existentes en el sistema.")
+                    print(f"{ERROR}============================================={RESET}")
+                    contador = 0
+                    break
                 if id_buscado == "":
                      raise ValueError
                 if eliminar_registro(datos, id_buscado):
                      break
             except ValueError:
                 print(f"{ERROR}Debe ingresar un ID válido.{RESET}")
+                
+            
+        input("\nPresione Enter para volver al menú...")
+        
+    # consulta individual de informe
     elif opcion == 4:
         while True:
              try:
-                 id_buscado = input("Ingrese el ID del cliente: ").upper()
+                 print(f"\n{MENU}--------------- CONSULTAR REGISTRO ---------------{RESET}")
+                 id_buscado = input(f"{AZUL}> {RESET}Ingrese el ID del registro: ").upper()
+                 contador+=1
+                 if contador == 3:
+                    print(f"\n{ERROR}=================== ERROR ==================={RESET}")
+                    print(f"{ROJO}No existe un registro con ese ID.{RESET}")
+                    print(f"{AMARILLO}Sugerencia:{RESET} Puede imprimir el informe completo")
+                    print(f"usando la {AZUL}opción 1{RESET} del menú para consultar")
+                    print(f"los ID existentes en el sistema.")
+                    print(f"{ERROR}============================================={RESET}")
+                    contador = 0
+                    break
                  if id_buscado == "":
                    raise ValueError
                  if informe_por_id(datos, id_buscado):
                    break
              except ValueError:
                  print(f"{ERROR}Debe ingresar un ID válido.{RESET}")
+        input("\nPresione Enter para volver al menú...")
     
