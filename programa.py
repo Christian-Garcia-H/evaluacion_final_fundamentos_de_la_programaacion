@@ -48,15 +48,28 @@ def agregar_registro(datos):
     print("Nuevo registro:", datos[-1])
 
 #Eliminar datos del registro por ID
-def eliminar_registro(datos):
-    id_buscado = input("Ingrese el ID del registro a eliminar: ").upper()#pasa a mayuscula 
-
+def eliminar_registro(datos, id_buscado):
     for i in range(len(datos)):
         if datos[i][0] == id_buscado:
             datos.pop(i)
             print("Registro eliminado correctamente.")
-            return
-    print("No existe un registro con ese ID.")
+            return True
+    print("No existe un registro con ese ID. Prueba con un ID como: C001")
+    return False
+
+#Imprimir informe por ID
+def informe_por_id(datos, id_cliente):
+    for cliente in datos:
+        if cliente[0] == id_cliente:
+            duracion = cliente[1]
+            clics = cliente[2]
+            compromiso = calcular_compromiso(duracion, clics)
+
+            print(f"El compromiso del usuario {id_cliente} fue: {compromiso}")
+            return True
+
+    print("No existe un registro con ese ID prueba con un ID como: C001")
+    return False
     
 #bucle principal del programa
 while True:
@@ -116,7 +129,23 @@ while True:
         #agrega nuevo registro al final de la matriz
         agregar_registro(datos)
     elif opcion == 3:
-        eliminar_registro(datos)
+        while True:
+            try:
+                id_buscado = input("Ingrese el ID del registro a eliminar: ").upper()
+                if id_buscado == "":
+                     raise ValueError
+                if eliminar_registro(datos, id_buscado):
+                     break
+            except ValueError:
+                print("Debe ingresar un ID válido.")
     elif opcion == 4:
-        print("prueba 4")
+        while True:
+             try:
+                 id_buscado = input("Ingrese el ID del cliente: ").upper()
+                 if id_buscado == "":
+                   raise ValueError
+                 if informe_por_id(datos, id_buscado):
+                   break
+             except ValueError:
+                 print("Debe ingresar un ID válido.")
     
